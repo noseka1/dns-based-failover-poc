@@ -1,0 +1,19 @@
+apiVersion: route53.aws.crossplane.io/v1alpha1
+kind: HostedZone
+metadata:
+  name: test-zone-1
+spec:
+  forProvider:
+    config:
+      privateZone: true
+      comment: Managed by Crossplane
+    name: myzonedomain-1.example.com.
+    vpc:
+      vpcIdRef:
+        name: test-vpc-1
+      vpcRegion: us-east-1
+    tags:
+    - key: Name
+      value: test-zone-1
+  providerConfigRef:
+    name: default

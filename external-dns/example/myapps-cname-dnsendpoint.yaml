@@ -1,0 +1,14 @@
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  labels:
+    external-dns.mydomain.org/publish: "yes"
+  name: myapps-cname
+  namespace: external-dns-custom
+spec:
+  endpoints:
+  - dnsName: "*.myzonedomain-1.example.com"
+    recordTTL: 300
+    recordType: CNAME
+    targets:
+    - router-default.apps.myclusterdomain.example.com

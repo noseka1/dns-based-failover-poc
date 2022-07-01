@@ -1,0 +1,16 @@
+apiVersion: route53.aws.crossplane.io/v1alpha1
+kind: ResourceRecordSet
+metadata:
+  name: myapps-cname
+  annotations:
+    crossplane.io/external-name: "*.myzonedomain-1.example.com"
+spec:
+  forProvider:
+    type: CNAME
+    zoneIdRef:
+      name: test-zone-1
+    ttl: 300
+    resourceRecords:
+      - value: "router-default.apps.myclusterdomain.example.com"
+  providerConfigRef:
+    name: default

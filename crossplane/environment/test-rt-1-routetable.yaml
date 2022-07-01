@@ -1,0 +1,21 @@
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: RouteTable
+metadata:
+  name: test-rt-1
+spec:
+  forProvider:
+    region: us-east-1
+    routes:
+      - destinationCidrBlock: 0.0.0.0/0
+        gatewayIdRef:
+          name: test-ig-1
+    associations:
+      - subnetIdRef:
+          name: test-subnet-1
+    vpcIdRef:
+      name: test-vpc-1
+    tags:
+    - key: Name
+      value: test-rt-1
+  providerConfigRef:
+    name: default

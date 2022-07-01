@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: external-dns
+      app.kubernetes.io/name: external-dns
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: external-dns
+        app.kubernetes.io/name: external-dns
+    spec:
+      containers:
+      - args:
+        - --domain-filter=myzonedomain-1.example.com
+        - --metrics-address=127.0.0.1:7979
+        - --txt-owner-id=external-dns-custom
+        - --provider=aws
+        - --source=crd
+        - --source=openshift-route
+        - --policy=sync
+        - --registry=txt
+        - --log-level=debug
+        - --label-filter=external-dns.mydomain.org/publish=yes
+        - --fqdn-template={{.Name}}.myzonedomain-1.example.com
+        - --txt-prefix=external-dns-custom-
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              key: aws_access_key_id
+              name: external-dns-credentials
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              key: aws_secret_access_key
+              name: external-dns-credentials
+        image: registry.redhat.io/edo/external-dns-rhel8@sha256:c1134bb46172997ef7278b6cefbb0da44e72a9f808a7cd67b3c65d464754cab9
+        name: external-dns
+      serviceAccountName: external-dns

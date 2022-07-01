@@ -1,0 +1,19 @@
+apiVersion: ec2.aws.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  name: test-instance-1
+spec:
+  forProvider:
+    region: us-east-1
+    imageId: ami-0cff7528ff583bf9a
+    instanceType: t2.micro
+    subnetIdRef:
+      name: test-subnet-1
+    securityGroupRefs:
+      - name: test-sg-1
+    keyName: test-keypair
+    tags:
+    - key: Name
+      value: test-instance-1
+  providerConfigRef:
+    name: default

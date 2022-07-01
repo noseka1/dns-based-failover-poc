@@ -1,0 +1,23 @@
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: SecurityGroup
+metadata:
+  name: test-sg-1
+spec:
+  forProvider:
+    description: Allow SSH port
+    region: us-east-1
+    vpcIdRef:
+      name: test-vpc-1
+    groupName: test-sg-1
+    tags:
+    - key: Name
+      value: test-sg-1
+    ingress:
+      - description: Allow SSH port
+        fromPort: 22
+        toPort: 22
+        ipProtocol: tcp
+        ipRanges:
+          - cidrIp: 0.0.0.0/0
+  providerConfigRef:
+    name: default

@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    external-dns.alpha.kubernetes.io/target: router-default.apps.myclusterdomain.example.com
+    external-dns.alpha.kubernetes.io/ttl: 300s
+  labels:
+    external-dns.mydomain.org/publish: "yes"
+  name: myapp-1
+  namespace: external-dns-custom
+spec:
+  host: myapp-1.myzonedomain-1.example.com
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: myapp-1
