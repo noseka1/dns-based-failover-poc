@@ -2,8 +2,6 @@ apiVersion: tf.crossplane.io/v1alpha1
 kind: Workspace
 metadata:
   name: test-1
-  annotations:
-    crossplane.io/external-name: test-1
 spec:
   forProvider:
     source: Remote

@@ -2,8 +2,6 @@ apiVersion: tf.crossplane.io/v1alpha1
 kind: Workspace
 metadata:
   name: myapps-cname
-  annotations:
-    crossplane.io/external-name: myapps-cname
 spec:
   forProvider:
     source: Remote
